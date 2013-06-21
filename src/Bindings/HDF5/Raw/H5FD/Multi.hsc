@@ -121,6 +121,9 @@ import Foreign.Ptr.Conventions
 -- >        haddr_t *memb_addr/*out*/, hbool_t *relax/*out*/);
 #ccall H5Pget_fapl_multi, <hid_t> -> OutArray <H5FD_mem_t> -> OutArray <hid_t> -> OutArray CString -> OutArray <haddr_t> -> Out <hbool_t> -> IO <herr_t>
 
+#if H5_VERSION_LE(1, 8, 10)
+-- this function was removed in 1.8.11
+
 -- TODO: investigate and elaborate.  Does this use the same array size and format as H5Pset_fapl_multi?
 -- |Set the data transfer property list 'dxpl_id' to use the multi
 -- driver with the specified data transfer properties for each
@@ -132,6 +135,7 @@ import Foreign.Ptr.Conventions
 -- > herr_t H5Pset_dxpl_multi(hid_t dxpl_id, const hid_t *memb_dxpl);
 #ccall H5Pset_dxpl_multi, <hid_t> -> InArray <hid_t> -> IO <herr_t>
 
+
 -- Purpose:	Returns information which was set with 'h5p_set_dxpl_multi' above.
 -- 
 -- Returns non-negative on success, negative on failure.
@@ -139,6 +143,7 @@ import Foreign.Ptr.Conventions
 -- > herr_t H5Pget_dxpl_multi(hid_t dxpl_id, hid_t *memb_dxpl/*out*/);
 #ccall H5Pget_dxpl_multi, <hid_t> -> OutArray <hid_t> -> IO <herr_t>
 
+#endif
 -- |Compatability function. Makes the multi driver act like the
 -- old split driver which stored meta data in one file and raw
 -- data in another file.
